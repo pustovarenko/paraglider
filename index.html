@@ -20,7 +20,7 @@
         }
         /* Стили для фонового изображения */
         .hero-bg {
-            background-image: url('bg_1.webp'); 
+            background-image: url('https://images.unsplash.com/photo-1445543949571-ffc3e0e2f55e?q=80&w=2069&auto=format&fit=crop'); 
             background-size: cover;
             background-position: center;
         }
@@ -31,6 +31,14 @@
             .hero-overlay {
                 background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 100%);
             }
+        }
+        /* Скрытие скроллбара для слайдера */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -43,12 +51,10 @@
                 <!-- 1. ЛЕВАЯ ЧАСТЬ -->
                 <div class="flex items-center gap-4 shrink-0">
                     <div class="hidden md:block">
-                        <span class="text-base md:text-lg font-extrabold text-sky-600 uppercase tracking-tight whitespace-nowrap">
-                            Полёты на параплане
-                        </span>
+                        <img src="Gemini_Generated_Image_eveeboeveeboevee_11zon.webp" alt="Параплан Урал" class="h-10 w-auto object-contain">
                     </div>
                     <a href="tel:+79525216552" class="md:hidden flex items-center gap-2 text-gray-800 font-bold text-sm">
-                        <div class="w-8 h-8 bg-sky-100 rounded-full flex items-center justify-center text-sky-600">
+                        <div class="w-8 h-8 bg-sky-100 rounded-[10px] flex items-center justify-center text-sky-600">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>
@@ -57,22 +63,12 @@
                     </a>
                 </div>
 
-                <!-- 2. ЦЕНТРАЛЬНАЯ ЧАСТЬ -->
-                <div class="hidden xl:flex items-center gap-6 text-xs font-semibold text-gray-600 uppercase tracking-wide whitespace-nowrap">
-                    <div class="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>Пилоты с налётом 500+ часов</span>
-                    </div>
-                    <div class="w-px h-6 bg-gray-200"></div>
-                    <div class="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>Безопасное оборудование</span>
-                    </div>
-                </div>
+                <!-- 2. ЦЕНТРАЛЬНАЯ ЧАСТЬ (МЕНЮ) -->
+                <nav class="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-semibold text-gray-800 uppercase tracking-wide whitespace-nowrap">
+                    <a href="#" class="hover:text-orange-500 transition">Другие места полётов</a>
+                    <a href="#price" class="hover:text-orange-500 transition">Сколько стоит</a>
+                    <a href="#steps" class="hover:text-orange-500 transition">Как записаться</a>
+                </nav>
 
                 <!-- 3. ПРАВАЯ ЧАСТЬ -->
                 <div class="flex items-center gap-4 lg:gap-6 shrink-0">
@@ -82,13 +78,18 @@
                                 +7 (952) 521-65-52
                             </a>
                         </div>
-                        <button onclick="document.querySelector('input[name=name]').focus()" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full text-xs lg:text-sm font-bold uppercase tracking-wide transition shadow-lg shadow-orange-500/30 transform hover:-translate-y-0.5 whitespace-nowrap">
+                        <button onclick="openCallModal()" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-[10px] text-xs lg:text-sm font-bold uppercase tracking-wide transition shadow-lg shadow-orange-500/30 transform hover:-translate-y-0.5 whitespace-nowrap">
                             Заказать звонок
                         </button>
                     </div>
-                    <button id="burger-btn" class="md:hidden text-gray-800 hover:text-sky-600 focus:outline-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button id="burger-btn" class="lg:hidden text-gray-800 hover:text-orange-500 focus:outline-none">
+                        <!-- Иконка бургера -->
+                        <svg id="burger-icon" xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- Иконка крестика -->
+                        <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
@@ -96,13 +97,12 @@
         </div>
 
         <!-- MOBILE MENU -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full left-0 top-full shadow-2xl h-screen">
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 absolute w-full left-0 top-full shadow-2xl h-screen overflow-y-auto">
             <nav class="flex flex-col p-6 space-y-6 text-center text-xl font-bold text-gray-800">
-                <a href="#price" class="hover:text-sky-500">Стоимость</a>
-                <a href="#route" class="hover:text-sky-500">Маршрут</a>
-                <a href="#media" class="hover:text-sky-500">Фото и видео</a>
-                <a href="#reviews" class="hover:text-sky-500">Отзывы</a>
-                <button onclick="document.querySelector('input[name=name]').focus()" class="bg-orange-500 text-white py-4 rounded-xl shadow-xl shadow-orange-500/20 mt-4">
+                <a href="#" class="hover:text-orange-500">Другие места полётов</a>
+                <a href="#price" class="hover:text-orange-500">Сколько стоит</a>
+                <a href="#steps" class="hover:text-orange-500">Как записаться</a>
+                <button onclick="openCallModal()" class="bg-orange-500 text-white py-4 rounded-[10px] shadow-xl shadow-orange-500/20 mt-4">
                     Заказать звонок
                 </button>
             </nav>
@@ -113,119 +113,72 @@
     <section class="relative min-h-[calc(100vh-70px)] flex items-center hero-bg text-white pt-12 pb-24">
         <div class="absolute inset-0 hero-overlay z-0"></div>
         <div class="container mx-auto px-4 md:px-8 relative z-10 w-full h-full">
-            
-            <nav class="hidden md:flex gap-8 lg:gap-12 mt-8 mb-12 lg:mb-20 text-sm font-bold uppercase tracking-widest text-white/90 border-b border-white/20 pb-6 w-full max-w-4xl">
-                <a href="#price" class="hover:text-orange-400 transition hover:border-orange-400 border-b-2 border-transparent pb-1">Стоимость</a>
-                <a href="#route" class="hover:text-orange-400 transition hover:border-orange-400 border-b-2 border-transparent pb-1">Маршрут</a>
-                <a href="#media" class="hover:text-orange-400 transition hover:border-orange-400 border-b-2 border-transparent pb-1">Фото и видео</a>
-                <a href="#reviews" class="hover:text-orange-400 transition hover:border-orange-400 border-b-2 border-transparent pb-1">Отзывы</a>
-            </nav>
 
-            <div class="flex flex-col lg:flex-row items-start lg:items-center gap-12 lg:gap-16">
-                <div class="w-full lg:flex-1">
-                    <h1 class="text-3xl md:text-5xl lg:text-5xl font-black tracking-tight mb-6 leading-tight drop-shadow-md">
+            <div class="flex flex-col items-start gap-10">
+                
+                <div class="w-full max-w-4xl">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-6 leading-tight drop-shadow-md">
                         Полёты на параплане: <br>
                         Большие Айские притёсы
                     </h1>
                     
-                    <div class="text-lg md:text-2xl font-medium mb-10 text-gray-100 max-w-2xl leading-relaxed">
-                        <span class="flex items-center gap-2 mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            Время в воздухе от 20 минут
-                        </span>
-                        <span class="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                            </svg>
-                            4К видео полёта
-                        </span>
+                    <div class="text-lg md:text-xl font-medium mb-10 text-gray-100 max-w-3xl leading-relaxed space-y-4 drop-shadow-sm">
+                        <p>
+                            Айские притесы - одно из самых живописных мест Челябинской области. Высокие скалы, изгибы реки Ай, пещеры и панорамы уральской природы создают идеальные условия для полета на параплане.
+                        </p>
+                        <p>
+                            Мы предлагаем тандемный полёт с пилотом инструктором - без подготовки на высоте 300 - 500 метров. Вам нужно только желание испытать новые эмоции которые останутся на всю жизнь.
+                        </p>
                     </div>
 
-                    <ul class="space-y-4 text-base md:text-lg font-medium text-gray-100">
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 min-w-[20px] h-5 bg-orange-500 rounded-full flex items-center justify-center">
-                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <span>Тандем с пилотом с налётом 500+ часов</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 min-w-[20px] h-5 bg-orange-500 rounded-full flex items-center justify-center">
-                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <span>Взлетаете в течение 60 минут после приезда</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 min-w-[20px] h-5 bg-orange-500 rounded-full flex items-center justify-center">
-                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <span>Безопасное сертифицированное оборудование не старше 3 лет</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 min-w-[20px] h-5 bg-orange-500 rounded-full flex items-center justify-center">
-                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <span>Тщательная проверка оборудования перед началом полёта</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="w-full lg:w-[420px] shrink-0 mx-auto lg:mx-0">
-                    <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 transform transition hover:scale-[1.01]">
-                        <div class="text-center mb-6">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-2">Забронируйте полёт</h2>
-                            <p class="text-gray-500 text-sm">Оставьте заявку и мы свяжемся с вами в течение 10 минут</p>
-                        </div>
-                        
-                        <form class="space-y-4" onsubmit="event.preventDefault(); alert('Заявка отправлена!');">
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1 ml-1">Ваше имя</label>
-                                <input type="text" name="name" placeholder="Иван" class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition text-gray-900 placeholder-gray-400 font-medium" required>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1 ml-1">Номер телефона</label>
-                                <input type="tel" name="phone" placeholder="+7 (999) 000-00-00" class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition text-gray-900 placeholder-gray-400 font-medium" required>
-                            </div>
-
-                            <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 rounded-xl shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1 mt-2">
-                                Забронировать полёт
-                            </button>
-                            
-                            <p class="text-xs text-center text-gray-400 mt-4">
-                                Заявка бесплатная и ни к чему вас не обязывает
-                            </p>
-                        </form>
+                    <!-- Буллеты (Белые плашки) -->
+                    <div class="flex flex-wrap gap-3 mb-10">
+                        <span class="bg-white text-gray-800 px-5 py-2.5 rounded-[10px] text-sm font-bold shadow-md">Полёт в тандеме с опытным пилотом</span>
+                        <span class="bg-white text-gray-800 px-5 py-2.5 rounded-[10px] text-sm font-bold shadow-md">Незабываемые фото и видео с высоты</span>
+                        <span class="bg-white text-gray-800 px-5 py-2.5 rounded-[10px] text-sm font-bold shadow-md">Безопасное сертифицированное оборудование</span>
                     </div>
+
+                    <!-- Кнопки -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="openBookModal()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 px-10 rounded-[10px] shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1 text-center">
+                            Записаться на полёт
+                        </button>
+                        <button onclick="document.querySelector('input[name=name]').focus()" class="bg-white hover:bg-gray-50 text-gray-900 font-bold text-lg py-4 px-10 rounded-[10px] shadow-lg transition transform hover:-translate-y-1 text-center">
+                            Купить подарочный сертификат
+                        </button>
+                    </div>
+                    
+                    <p class="text-sm md:text-base text-gray-200 mt-5 opacity-90 font-medium">
+                        Мы свяжемся с вами в ближайшее время и обсудим все детали по полёту
+                    </p>
                 </div>
 
             </div>
         </div>
     </section>
+    
     <!-- БЛОК "ОПИСАНИЕ МЕСТА" -->
-    <!-- Изменил id="route" на id="location", так как "Маршрут" теперь будет ниже -->
     <section id="location" class="py-20 bg-white">
         <div class="container mx-auto px-4 md:px-8">
             
             <!-- Заголовки и Текст -->
             <div class="mb-14">
-                <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-gray-900 mb-2">
-                    Айские притёсы — место, где захватывает дух
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mb-2">
+                    Описание места
                 </h2>
-                <h3 class="text-xl text-orange-500 font-bold mb-8 uppercase tracking-wide">
+                <h3 class="text-xl text-orange-500 font-bold mb-8 tracking-wide">
                     Где находится и как добираться
                 </h3>
                 
                 <div class="max-w-4xl text-lg text-gray-600 space-y-6 leading-relaxed">
                     <p>
-                        Айские притёсы — одно из самых живописных мест Челябинской области, недалеко от города Сатка. Отвесные скалы высотой до 100 метров и извилистая река Ай внизу — именно тот пейзаж, который превращает ваше 4K-видео из «просто полёта» в контент, который хочется пересматривать.
+                        Айские притёсы одно из самых живописных мест в Челябинской области. Находится недалеко от города Сатка. Эта локация известна своими отвесными скалами высотой до 100 метров и потрясающими видами на реку Ай.
                     </p>
                     <p>
-                        Во время парения открывается панорама на десятки километров: леса Южного Урала, скальные массивы и речные изгибы прямо под вами. Здесь ваши земные проблемы остаются где-то далеко внизу.
+                        Во время полёта на параплане открывается панорама на десятки километров: леса Южного Урала, скальные массивы и извилистую реку. Это не просто экстремальный отдых — это возможность увидеть природу с высоты птичьего полёта.
                     </p>
                     <p class="font-bold text-gray-800">
-                        А дорога до Больших Айских притёсов — это уже начало вашего приключения. По пути вы встретите места, ради которых люди приезжают на Южный Урал:
+                        Пока вы на машине или автобусе добираетесь до Больших Айских притёсов, у вас получится маленькое и увлекательное путешествие, в котором вы увидите и встретите много уникальных и красивых мест
                     </p>
                 </div>
             </div>
@@ -236,16 +189,16 @@
                 <!-- 1. ГЭС Пороги -->
                 <div class="group">
                     <div class="overflow-hidden rounded-xl mb-4 shadow-md aspect-square">
-                        <img src="https://rvland.ru/wp-content/uploads/poi/ChIJjzMMKzMt20MRwVVyCCWMwiw.jpg" alt="ГЭС «Пороги»" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="https://images.unsplash.com/photo-1585821803738-958b1eb7526a?auto=format&fit=crop&q=80&w=600" alt="ГЭС Пороги" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
                     </div>
                     <h4 class="font-bold text-gray-900 mb-2 text-lg">ГЭС «Пороги»</h4>
-                    <p class="text-sm text-gray-600 leading-relaxed">Старейшая гидроэлектростанция России на реке Большая Сатка, сохранившая атмосферу индустриального Урала начала XX века</p>
+                    <p class="text-sm text-gray-600 leading-relaxed">Одна из старейших гидроэлектростанций России на реке Большая Сатка, сохранившая атмосферу индустриального Урала начала XX века</p>
                 </div>
 
                 <!-- 2. Известковые печи -->
                 <div class="group">
                     <div class="overflow-hidden rounded-xl mb-4 shadow-md aspect-square">
-                        <img src="https://avatars.mds.yandex.net/get-altay/10963046/2a0000018c9746ca6a0f310fdb5380745279/XXL_height" alt="Известковые печи" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                        <img src="https://images.unsplash.com/photo-1589556264803-455b801a6b0c?auto=format&fit=crop&q=80&w=600" alt="Известковые печи" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
                     </div>
                     <h4 class="font-bold text-gray-900 mb-2 text-lg">Известковые печи</h4>
                     <p class="text-sm text-gray-600 leading-relaxed">Молчаливые свидетели старинного ремесла, где в огне рождалась известь для строительства окрестных деревень</p>
@@ -254,16 +207,16 @@
                 <!-- 3. Гаевский карьер -->
                 <div class="group">
                     <div class="overflow-hidden rounded-xl mb-4 shadow-md aspect-square">
-                        <img src="https://avatars.mds.yandex.net/i?id=b520c7b7dbc45abb490af96e6283ab4c_l-4554229-images-thumbs&n=13" alt="Гаевский карьер" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                        <img src="https://images.unsplash.com/photo-1596525737152-32b49d6052dc?auto=format&fit=crop&q=80&w=600" alt="Гаевский карьер" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
                     </div>
                     <h4 class="font-bold text-gray-900 mb-2 text-lg">Гаевский карьер</h4>
-                    <p class="text-sm text-gray-600 leading-relaxed">Глубина 200 метров, живописный уголок с изумрудной водой и светлыми скальными берегами</p>
+                    <p class="text-sm text-gray-600 leading-relaxed">Живописный уголок с изумрудной водой и светлыми скальными берегами глубиной 200 метров</p>
                 </div>
 
                 <!-- 4. Пещера Кургазак -->
                 <div class="group">
                     <div class="overflow-hidden rounded-xl mb-4 shadow-md aspect-square">
-                        <img src="https://avatars.mds.yandex.net/i?id=7eb52a5100c7a6d227ee128229f17aed_l-4987697-images-thumbs&n=13" alt="Пещера Кургазак" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                        <img src="https://images.unsplash.com/photo-1499233983072-bf804d026330?auto=format&fit=crop&q=80&w=600" alt="Пещера Кургазак" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
                     </div>
                     <h4 class="font-bold text-gray-900 mb-2 text-lg">Пещера Кургазак</h4>
                     <p class="text-sm text-gray-600 leading-relaxed">Популярная достопримечательность на левом берегу реки Ай, рядом с Айскими притёсами. Это одна из самых посещаемых пещер</p>
@@ -272,7 +225,7 @@
                 <!-- 5. Лаклинская пещера -->
                 <div class="group">
                     <div class="overflow-hidden rounded-xl mb-4 shadow-md aspect-square">
-                        <img src="https://sun9-31.userapi.com/impg/QZ9nnMi-Q8woubdkV3x0jSbRJiNO4HZnSaC-Yg/vpLXNVDiKRE.jpg?size=1080x940&quality=96&sign=3923a4e5ac058a28b1654ed0fcf872b3&c_uniq_tag=2uKuwXesLIIH8MeON4FK9J-Ekk6VOq250N0j_m70fno&type=album" alt="Лаклинская пещера" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                        <img src="https://images.unsplash.com/photo-1506263640209-66170560b372?auto=format&fit=crop&q=80&w=600" alt="Лаклинская пещера" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
                     </div>
                     <h4 class="font-bold text-gray-900 mb-2 text-lg">Лаклинская пещера</h4>
                     <p class="text-sm text-gray-600 leading-relaxed">Величественный подземный зал Урала, где огромные гроты и прохладная тишина создают ощущение скрытого природного дворца</p>
@@ -281,7 +234,7 @@
                 <!-- 6. Сухие водопады -->
                 <div class="group">
                     <div class="overflow-hidden rounded-xl mb-4 shadow-md aspect-square">
-                        <img src="https://rm-tour.ru/templates/yootheme/cache/suhie_vodopadi-ab6b6768.jpeg" alt="Сухие водопады" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                        <img src="https://images.unsplash.com/photo-1485627658391-1365e4e0db9e?auto=format&fit=crop&q=80&w=600" alt="Сухие водопады" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
                     </div>
                     <h4 class="font-bold text-gray-900 mb-2 text-lg">Сухие водопады</h4>
                     <p class="text-sm text-gray-600 leading-relaxed">Застывшие известняковые каскады напоминают поток воды, остановленный во времени, создавая эффектный и редкий для Урала ландшафт</p>
@@ -290,7 +243,7 @@
                 <!-- 7. Айский фонтан -->
                 <div class="group">
                     <div class="overflow-hidden rounded-xl mb-4 shadow-md aspect-square">
-                        <img src="https://avatars.mds.yandex.net/get-altay/6203703/2a0000018a30749e6c200d556f6b42ce0521/orig" alt="Айский фонтан" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                        <img src="https://images.unsplash.com/photo-1528829929288-7f551c9118c7?auto=format&fit=crop&q=80&w=600" alt="Айский фонтан" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
                     </div>
                     <h4 class="font-bold text-gray-900 mb-2 text-lg">Айский фонтан</h4>
                     <p class="text-sm text-gray-600 leading-relaxed">Необычная достопримечательность долины реки Ай, где мощная струя подземной воды вырывается на поверхность, создавая эффектный природный гейзер</p>
@@ -299,10 +252,10 @@
                 <!-- 8. Экстрим парк Грифон -->
                 <div class="group">
                     <div class="overflow-hidden rounded-xl mb-4 shadow-md aspect-square">
-                        <img src="https://a.d-cd.net/pNKlyywMikke_6LNH443h1qcoIA-960.jpg" alt="Экстрим парк Грифон" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                        <img src="https://images.unsplash.com/photo-1533590598064-9464016666ba?auto=format&fit=crop&q=80&w=600" alt="Экстрим парк Грифон" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
                     </div>
                     <h4 class="font-bold text-gray-900 mb-2 text-lg">Экстрим парк Грифон</h4>
-                    <p class="text-sm text-gray-600 leading-relaxed">Здесь можно прыгнуть со скалы, покачаться на качели, пройти по мосту над обрывом, сделать фотки и выпить кофе</p>
+                    <p class="text-sm text-gray-600 leading-relaxed">Здесь вы сможете прыгнуть со скалы, покачаться на качели и пройти по мосту над обрывом, сделать фотки и выпить кофе</p>
                 </div>
 
             </div>
@@ -315,8 +268,12 @@
             
             <!-- Заголовок блока -->
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-gray-900 mb-4">Сколько стоит полёт</h2>
-                <p class="text-xl text-gray-600 font-medium">Цена включает всё — никаких доплат на месте</p>
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mb-4">Сколько стоит полёт</h2>
+                <div class="text-lg md:text-xl text-gray-600 font-medium max-w-4xl mx-auto space-y-2">
+                    <p>Полёт на параплане на Айских притёсах доступен в двух форматах — 20 и 40 минут.</p>
+                    <p>Вы можете выбрать ознакомительный полёт или более продолжительный маршрут.</p>
+                    <p>Все полёты проходят в тандеме с инструктором и не требуют подготовки</p>
+                </div>
             </div>
 
             <!-- Сетка тарифов -->
@@ -329,27 +286,27 @@
                     <h3 class="text-2xl font-bold text-gray-900 mb-4 pr-4">Полёт на мотопараплане 20 минут</h3>
                     
                     <p class="text-gray-600 mb-8 flex-grow leading-relaxed">
-                        20 минут чистого парения над Айскими притёсами – оптимальный формат для первого знакомства с парапланом
+                        Это идеальный вариант для тех кто хочет получить яркое знакомство с небом и потрясающими видами на реку Ай, скалы и уральскую природу. За 20 минут вы успеете насладиться панорамами с высоты, почувствовать лёгкость свободного полёта и сделать эффектные фото и видео.
                     </p>
                     
                     <ul class="space-y-4 mb-10 text-gray-700 font-medium">
                         <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-green-500 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Полный инструктаж</span>
+                            <span class="text-xl shrink-0 mt-0.5">🪂</span>
+                            <span>Полёт в тандеме с инструктором — безопасно и без подготовки</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-green-500 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Страховка включена в стоимость</span>
+                            <span class="text-xl shrink-0 mt-0.5">📸</span>
+                            <span>Красивые виды на Айские притёсы и реку Ай с высоты</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-green-500 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Множество видео и фото на вашем телефоне</span>
+                            <span class="text-xl shrink-0 mt-0.5">⏱</span>
+                            <span>Оптимальный формат для первого знакомства с парапланом</span>
                         </li>
                     </ul>
 
                     <div class="mt-auto pt-6 border-t border-gray-100">
                         <div class="text-3xl font-black text-gray-900 mb-6">9 990 руб.</div>
-                        <button onclick="document.querySelector('input[name=name]').focus()" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-lg py-4 rounded-xl shadow-lg shadow-sky-500/30 transition transform hover:-translate-y-1">
+                        <button onclick="openBookModal()" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-lg py-4 rounded-[10px] shadow-lg shadow-sky-500/30 transition transform hover:-translate-y-1">
                             Заказать полёт
                         </button>
                     </div>
@@ -362,47 +319,54 @@
                     <h3 class="text-2xl font-bold text-gray-900 mb-4 pr-4">Полёт на мотопараплане 40 минут</h3>
                     
                     <p class="text-gray-600 mb-8 flex-grow leading-relaxed">
-                        За 40 минут мы наберём большую высоту, пролетим вдоль скал, увидим изгибы реки Ай и насладимся масштабом уральской природы
+                        Такой формат выбирают те, кто хочет максимум впечатлений, больше 40 минут в воздухе и более яркие ощущения. Продолжительный маршрут составит более 40км - это возможность по-настоящему прочувствовать свободу неба. За это время мы можем набрать большую высоту, пролететь вдоль скал, увидеть изгибы реки Ай и насладиться масштабом уральской природы. 
                     </p>
                     
                     <ul class="space-y-4 mb-10 text-gray-700 font-medium">
                         <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-green-500 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Для тех, кто хочет максимум впечатлений</span>
+                            <span class="text-xl shrink-0 mt-0.5">🪂</span>
+                            <span>Увеличенное время полёта — до 40 минут в воздухе</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-green-500 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Маршрут более 40 км</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-green-500 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="text-xl shrink-0 mt-0.5">🌄</span>
                             <span>Панорамные виды на Айские притёсы и окрестности</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-xl shrink-0 mt-0.5">🎥</span>
+                            <span>Возможность сделать больше фото и видео в небе</span>
                         </li>
                     </ul>
 
                     <div class="mt-auto pt-6 border-t border-gray-100">
                         <div class="text-3xl font-black text-gray-900 mb-6">16 990 руб.</div>
-                        <button onclick="document.querySelector('input[name=name]').focus()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 rounded-xl shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1">
+                        <button onclick="openBookModal()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 rounded-[10px] shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1">
                             Заказать полёт
                         </button>
                     </div>
                 </div>
 
             </div>
+
+            <!-- Текст под тарифами -->
+            <div class="text-center mt-12 text-lg md:text-xl text-gray-700 font-medium leading-relaxed">
+                Не смогли выбрать подходящий полёт или есть вопросы? <br class="hidden md:block">
+                Позвоните <a href="tel:+79525216552" class="font-bold text-sky-600 hover:text-orange-500 transition">+79525216552</a> Дмитрий.
+            </div>
+
         </div>
     </section>
 
-    <!-- БЛОК "МАРШРУТ НАШЕГО ПОЛЁТА" (ВОЗВРАЩЕН) -->
+    <!-- БЛОК "МАРШРУТ НАШЕГО ПОЛЁТА" -->
     <section id="route" class="py-20 bg-white">
         <div class="container mx-auto px-4 md:px-8">
             
             <!-- Заголовок -->
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-gray-900 mb-4">
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mb-4">
                     Маршрут нашего полёта
                 </h2>
-                <p class="text-xl text-orange-500 font-bold uppercase tracking-wide">
-                    Что вы увидите с высоты птичьего полёта
+                <p class="text-lg text-orange-500 font-bold tracking-wide">
+                    Что вы увидите и над чем будете пролетать на параплане с высоты птичьего полёта
                 </p>
             </div>
 
@@ -411,7 +375,7 @@
                 <!-- Левая колонка: Текст -->
                 <div class="w-full lg:w-1/2">
                     <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-                        Взлёт и посадка осуществляется в безопасной зоне вблизи небольшого аэродрома Межевой. Высота во время полёта будет от 50 до 700 метров и летим по такому маршруту:
+                        Взлёт и посадка осуществляется в безопасной зоне вблизи небольшого аэродрома Межевой. Высота во время полёта будет от 50 до 700 метров и летим по маршруту.
                     </p>
                     
                     <div class="space-y-6 mb-10">
@@ -442,7 +406,7 @@
                         </div>
                     </div>
 
-                    <button onclick="document.querySelector('input[name=name]').focus()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 px-10 rounded-full shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1 w-full md:w-auto">
+                    <button onclick="openBookModal()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 px-10 rounded-[10px] shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1 w-full md:w-auto">
                         Забронировать полёт
                     </button>
                 </div>
@@ -451,7 +415,7 @@
                 <div class="w-full lg:w-1/2">
                     <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white h-full min-h-[400px] relative group">
                         <!-- Используем placeholder карты, так как реальной картинки нет, но стиль будет подходящий -->
-                        <img src="https://f2.lpcdn.site/s/73foo7n061/5f43d0b68b14608c9468b0cb9f53586e/087474ab20e41f7e39a46ae9b3486a2c.png" alt="Карта маршрута" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+                        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1000" alt="Карта маршрута" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
                         
                         <!-- Декоративная подпись, чтобы было понятно, что это карта -->
                         <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg text-xs font-bold text-gray-600 shadow-sm">
@@ -464,55 +428,45 @@
         </div>
     </section>
 
-    <!-- БЛОК "СХЕМА РАБОТЫ" (НОВЫЙ) -->
+    <!-- БЛОК "СХЕМА РАБОТЫ" -->
     <section id="steps" class="py-20 bg-gray-50">
         <div class="container mx-auto px-4 md:px-8">
             
             <!-- Заголовок -->
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-gray-900">
-                    От заявки до полёта 4 простых шага
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mb-4">
+                    Схема нашей работы
                 </h2>
+                <p class="text-lg md:text-xl text-orange-500 font-bold tracking-wide">
+                    Пошаговый план как заказать и полетать на параплане
+                </p>
             </div>
 
-            <!-- 4 Шага (Сетка) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            <!-- 3 Шага (Сетка) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 max-w-6xl mx-auto">
                 
                 <!-- Шаг 1 -->
                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative group hover:shadow-md transition duration-300">
                     <div class="text-5xl font-black text-sky-100 absolute top-4 right-4 group-hover:text-sky-200 transition">01</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4 relative z-10">Шаг 1. Заявка</h3>
-                    <p class="text-gray-600 leading-relaxed relative z-10 text-sm">
-                        Оставляете заявку на сайт, либо звоните нам.<br>
-                        Мы помогаем вам выбрать подходящий полёт, дату и время полёта
+                    <p class="text-gray-700 leading-relaxed relative z-10 text-base font-medium mt-4">
+                        Оставьте заявку на сайте или позвоните нам по телефону +79525216552<br><br>
+                        Мы с вами свяжемся  обсудим все вопросы и детали полёта
                     </p>
                 </div>
 
                 <!-- Шаг 2 -->
                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative group hover:shadow-md transition duration-300">
                     <div class="text-5xl font-black text-sky-100 absolute top-4 right-4 group-hover:text-sky-200 transition">02</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4 relative z-10">Шаг 2. Бронь полёта</h3>
-                    <p class="text-gray-600 leading-relaxed relative z-10 text-sm">
-                        Бронируете полёт и ждёте даты
+                    <p class="text-gray-700 leading-relaxed relative z-10 text-base font-medium mt-4">
+                        Мы добавим ваш номер в чат по полётам в мессенджерах  Telegram, ВК, WhatsApp, MAX в которых вы будете видеть расписание предстоящих выездов на полёты
                     </p>
                 </div>
 
                 <!-- Шаг 3 -->
                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative group hover:shadow-md transition duration-300">
                     <div class="text-5xl font-black text-sky-100 absolute top-4 right-4 group-hover:text-sky-200 transition">03</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4 relative z-10">Шаг 3. Напоминание о полёте</h3>
-                    <p class="text-gray-600 leading-relaxed relative z-10 text-sm">
-                        За день до полёта вы получаете сообщение с точной геолокацией, прогнозом погоды, рекомендациями по одежде и именем вашего пилота.<br>
-                        Если погода изменится — перенесём на удобную дату
-                    </p>
-                </div>
-
-                <!-- Шаг 4 -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative group hover:shadow-md transition duration-300">
-                    <div class="text-5xl font-black text-sky-100 absolute top-4 right-4 group-hover:text-sky-200 transition">04</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4 relative z-10">Шаг 4. Инструктаж</h3>
-                    <p class="text-gray-600 leading-relaxed relative z-10 text-sm">
-                        Знакомитесь с пилотом, проходите инструктаж. Вы будете точно знать, как проходит взлёт, что делать в полёте и как мы будем садиться.
+                    <p class="text-gray-700 leading-relaxed relative z-10 text-base font-medium mt-4">
+                        При благоприятных метеоусловий для полётов мы информируем вас. Если вам удобно полетать в этот день, вы записываетесь и приезжаете, если не удобно то ожидаете следующих выездов
                     </p>
                 </div>
 
@@ -520,9 +474,17 @@
 
             <!-- Текст под схемой -->
             <div class="max-w-4xl mx-auto text-center mb-20">
-                <p class="text-lg md:text-xl text-gray-700 font-medium leading-relaxed bg-white/50 p-6 rounded-2xl border border-gray-100 shadow-sm">
-                    Весь процесс от приезда на локацию до готовых видео и фоток в вашем телефоне занимает не больше 2 часов. Мы ценим ваше время и берём всю организацию на себя — вам остаётся только приехать и получить удовольствие.
-                </p>
+                <div class="text-base md:text-lg text-gray-700 font-medium leading-relaxed bg-white/50 p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm space-y-4">
+                    <p>
+                        Наше правило: лучше отменить полёт, чем рисковать. Для безопасного старта на параплане нужна спокойная погода без осадков и порывов ветра.
+                    </p>
+                    <p>
+                        Погода на притёсах поменяться за полчаса. Поэтому иногда нам приходится отменять или переносить полеты прямо в день старта. К сожалению, мы не можем на это повлиять.
+                    </p>
+                    <p>
+                        Пожалуйста, относитесь к переносам с пониманием: если мы говорим «сегодня не летим», значит, мы заботимся о вашей жизни и безопасности.
+                    </p>
+                </div>
             </div>
 
             <!-- Горизонтальная форма -->
@@ -533,7 +495,7 @@
 
                 <div class="relative z-10">
                     <div class="text-center mb-10">
-                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Не смогли выбрать подходящий полёт?</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Хотите забронировать полёт?</h3>
                         <p class="text-lg text-gray-600">Оставьте заявку — подберём вариант под ваши пожелания и бюджет. Перезвоним в течение 15 минут.</p>
                     </div>
 
@@ -547,8 +509,8 @@
                         </div>
 
                         <div class="w-full lg:w-1/3 flex flex-col items-center">
-                            <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg h-[60px] rounded-xl shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1">
-                                Подобрать полёт
+                            <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg h-[60px] rounded-[10px] shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1">
+                                Забронировать полёт
                             </button>
                             <p class="text-xs text-gray-400 mt-3 text-center">
                                 Заявка бесплатная и ни к чему вас не обязывает
@@ -561,161 +523,149 @@
         </div>
     </section>
 
-    <!-- БЛОК "ФОТО И ВИДЕО" (НОВЫЙ) -->
-    <section id="media" class="py-20 bg-white overflow-hidden">
+    <!-- БЛОК "ФОТО И ВИДЕО" -->
+    <section id="media" class="py-20 bg-white overflow-hidden relative">
         <div class="container mx-auto px-4 md:px-8">
             
             <!-- Заголовки -->
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-gray-900 mb-4">
-                    Так выглядит ваш будущий полёт
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 mb-4">
+                    Фото с полётов
                 </h2>
-                <p class="text-xl text-orange-500 font-bold uppercase tracking-wide">
-                    Реальные кадры наших клиентов
+                <p class="text-lg md:text-xl text-orange-500 font-bold tracking-wide">
+                    Посмотрите, как будет выглядеть полёт и какие виды вы увидите при полёте на параплане 
                 </p>
             </div>
 
             <!-- Слайдер -->
-            <div class="relative max-w-5xl mx-auto mb-12 group">
+            <div class="relative max-w-[1400px] mx-auto group">
                 
                 <!-- Контейнер слайдов -->
-                <div class="overflow-hidden rounded-3xl shadow-2xl aspect-video md:aspect-[16/9] relative bg-gray-100">
-                    <div id="slider-track" class="flex transition-transform duration-500 ease-out h-full">
+                <div class="relative w-full">
+                    <div id="slider-track" class="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 pt-4">
+                        
                         <!-- Слайд 1 -->
-                        <div class="min-w-full h-full relative">
-                            <img src="https://i.ytimg.com/vi/08dO38QuITE/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLCVwPii2hDW6HmeiMvFU8rnQrOp-g" alt="Полёт на параплане" class="w-full h-full object-cover">
+                        <div class="w-[75vw] sm:w-[45vw] lg:w-[31%] max-w-[450px] max-h-[60vh] flex-shrink-0 snap-center rounded-3xl overflow-hidden aspect-square shadow-lg relative bg-gray-100">
+                            <img src="https://images.unsplash.com/photo-1605636569145-c322b647f329?auto=format&fit=crop&q=80&w=800" alt="Полёт на параплане" class="w-full h-full object-cover">
                         </div>
                         <!-- Слайд 2 -->
-                        <div class="min-w-full h-full relative">
-                            <img src="https://static.tildacdn.com/tild3636-3761-4534-a633-656163363538/u_4-6ObA7yQ.jpg" alt="Вид с высоты" class="w-full h-full object-cover">
+                        <div class="w-[75vw] sm:w-[45vw] lg:w-[31%] max-w-[450px] max-h-[60vh] flex-shrink-0 snap-center rounded-3xl overflow-hidden aspect-square shadow-lg relative bg-gray-100">
+                            <img src="https://images.unsplash.com/photo-1516933546747-8276f2382e75?auto=format&fit=crop&q=80&w=800" alt="Вид с высоты" class="w-full h-full object-cover">
                         </div>
                         <!-- Слайд 3 -->
-                        <div class="min-w-full h-full relative">
-                            <img src="https://avatars.mds.yandex.net/i?id=a595d846ab8e8a1f9689150dba4c28c9_l-4464285-images-thumbs&n=13" alt="Вид с параплана" class="w-full h-full object-cover">
+                        <div class="w-[75vw] sm:w-[45vw] lg:w-[31%] max-w-[450px] max-h-[60vh] flex-shrink-0 snap-center rounded-3xl overflow-hidden aspect-square shadow-lg relative bg-gray-100">
+                            <img src="https://images.unsplash.com/photo-1534954495574-d4b684877717?auto=format&fit=crop&q=80&w=800" alt="Эмоции после полета" class="w-full h-full object-cover">
                         </div>
                         <!-- Слайд 4 -->
-                        <div class="min-w-full h-full relative">
-                            <img src="https://i.pinimg.com/originals/1f/f8/2e/1ff82e4b5c3df0505a849c285a211249.jpg?nii=t" alt="Вид с параплана" class="w-full h-full object-cover">
+                        <div class="w-[75vw] sm:w-[45vw] lg:w-[31%] max-w-[450px] max-h-[60vh] flex-shrink-0 snap-center rounded-3xl overflow-hidden aspect-square shadow-lg relative bg-gray-100">
+                            <img src="https://images.unsplash.com/photo-1505245842240-6228795c7317?auto=format&fit=crop&q=80&w=800" alt="Параплан в небе" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Слайд 5 -->
+                        <div class="w-[75vw] sm:w-[45vw] lg:w-[31%] max-w-[450px] max-h-[60vh] flex-shrink-0 snap-center rounded-3xl overflow-hidden aspect-square shadow-lg relative bg-gray-100">
+                            <img src="https://images.unsplash.com/photo-1520190282873-afe1285c9a2a?auto=format&fit=crop&q=80&w=800" alt="Свобода полета" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Слайд 6 -->
+                        <div class="w-[75vw] sm:w-[45vw] lg:w-[31%] max-w-[450px] max-h-[60vh] flex-shrink-0 snap-center rounded-3xl overflow-hidden aspect-square shadow-lg relative bg-gray-100">
+                            <img src="https://images.unsplash.com/photo-1521685449911-382a51f8a846?auto=format&fit=crop&q=80&w=800" alt="Полет над горами" class="w-full h-full object-cover">
                         </div>
                     </div>
-
-                    <!-- Затемнение снизу для текста (опционально) -->
-                    <div class="absolute inset-0 pointer-events-none shadow-[inset_0_-100px_100px_rgba(0,0,0,0.3)]"></div>
                 </div>
 
                 <!-- Кнопки навигации -->
-                <!-- Изменено: убраны классы прозрачности (opacity), фон сделан белым (bg-white), текст черным (text-gray-900) всегда -->
-                <button id="prev-slide" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white text-gray-900 p-3 rounded-full transition-transform duration-300 md:-left-6 lg:-left-12 shadow-lg hover:scale-110">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                <button id="prev-slide" class="absolute left-2 md:-left-6 lg:-left-10 top-1/2 -translate-y-1/2 bg-white text-gray-900 w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full shadow-2xl border border-gray-100 transition-transform duration-300 hover:scale-110 z-20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                     </svg>
                 </button>
-                <button id="next-slide" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white text-gray-900 p-3 rounded-full transition-transform duration-300 md:-right-6 lg:-right-12 shadow-lg hover:scale-110">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                <button id="next-slide" class="absolute right-2 md:-right-6 lg:-right-10 top-1/2 -translate-y-1/2 bg-white text-gray-900 w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full shadow-2xl border border-gray-100 transition-transform duration-300 hover:scale-110 z-20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
 
-                <!-- Индикаторы (точки) -->
-                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-                    <button class="w-3 h-3 rounded-full bg-white transition-all slider-dot opacity-100 ring-2 ring-black/20" data-index="0"></button>
-                    <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all slider-dot" data-index="1"></button>
-                    <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all slider-dot" data-index="2"></button>
-                    <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all slider-dot" data-index="3"></button>
-                </div>
-            </div>
-
-            <!-- Текст под галереей -->
-            <div class="text-center max-w-3xl mx-auto">
-                <p class="text-lg md:text-xl text-gray-700 font-medium leading-relaxed italic">
-                    Это реальные фото людей, которые ещё вчера сидели в офисе, а сегодня уже парят над Айскими притёсами
-                </p>
             </div>
 
         </div>
     </section>
 
-    <!-- БЛОК "ОТЗЫВЫ" (НОВЫЙ) -->
+    <!-- БЛОК "ОТЗЫВЫ" (ИЗМЕНЕН) -->
     <section id="reviews" class="py-20 bg-gray-50">
         <div class="container mx-auto px-4 md:px-8">
             
             <!-- Заголовки -->
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-gray-900 mb-4">
-                    Слова тех, кто побывал в небе над Айскими притёсами
-                </h2>
-                <p class="text-xl text-orange-500 font-bold uppercase tracking-wide">
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900">
                     Отзывы о полётах
-                </p>
+                </h2>
             </div>
 
-            <!-- Слайдер Отзывов -->
-            <div class="relative max-w-sm md:max-w-md mx-auto mb-12 group">
+            <!-- Слайдер Отзывов (Копия структуры "Фото с полётов") -->
+            <div class="relative max-w-[1400px] mx-auto mb-12 group">
                 
-                <!-- Контейнер слайдов (Вертикальный формат для скриншотов с телефона) -->
-                <div class="overflow-hidden rounded-3xl shadow-xl border border-gray-200 aspect-[9/16] bg-white relative">
-                    <div id="reviews-track" class="flex transition-transform duration-500 ease-out h-full">
+                <!-- Контейнер слайдов -->
+                <div class="relative w-full">
+                    <div id="reviews-slider-track" class="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 pt-4">
+                        
                         <!-- Слайд 1 -->
-                        <div class="min-w-full h-full flex items-center justify-center bg-gray-100">
-                            <!-- Заглушка под скриншот -->
-                            <div class="text-center p-6">
-                                <p class="text-gray-400 font-bold text-lg mb-2">Скриншот отзыва 1</p>
-                                <p class="text-gray-400 text-sm">Здесь будет картинка</p>
-                            </div>
-                            <!-- <img src="путь_к_скриншоту_1.jpg" class="w-full h-full object-cover" alt="Отзыв"> -->
+                        <div class="w-[75vw] sm:w-[45vw] lg:w-[31%] max-w-[450px] max-h-[60vh] flex-shrink-0 snap-center rounded-3xl overflow-hidden aspect-square shadow-lg relative bg-gray-100">
+                            <img src="https://placehold.co/800x800/eeeeee/9ca3af?text=Скриншот+отзыва+1" alt="Отзыв 1" class="w-full h-full object-cover">
                         </div>
                         <!-- Слайд 2 -->
-                        <div class="min-w-full h-full flex items-center justify-center bg-gray-200">
-                            <div class="text-center p-6">
-                                <p class="text-gray-500 font-bold text-lg mb-2">Скриншот отзыва 2</p>
-                                <p class="text-gray-500 text-sm">Здесь будет картинка</p>
-                            </div>
+                        <div class="w-[75vw] sm:w-[45vw] lg:w-[31%] max-w-[450px] max-h-[60vh] flex-shrink-0 snap-center rounded-3xl overflow-hidden aspect-square shadow-lg relative bg-gray-100">
+                            <img src="https://placehold.co/800x800/eeeeee/9ca3af?text=Скриншот+отзыва+2" alt="Отзыв 2" class="w-full h-full object-cover">
                         </div>
                         <!-- Слайд 3 -->
-                        <div class="min-w-full h-full flex items-center justify-center bg-gray-100">
-                            <div class="text-center p-6">
-                                <p class="text-gray-400 font-bold text-lg mb-2">Скриншот отзыва 3</p>
-                                <p class="text-gray-400 text-sm">Здесь будет картинка</p>
-                            </div>
+                        <div class="w-[75vw] sm:w-[45vw] lg:w-[31%] max-w-[450px] max-h-[60vh] flex-shrink-0 snap-center rounded-3xl overflow-hidden aspect-square shadow-lg relative bg-gray-100">
+                            <img src="https://placehold.co/800x800/eeeeee/9ca3af?text=Скриншот+отзыва+3" alt="Отзыв 3" class="w-full h-full object-cover">
                         </div>
+                        <!-- Слайд 4 -->
+                        <div class="w-[75vw] sm:w-[45vw] lg:w-[31%] max-w-[450px] max-h-[60vh] flex-shrink-0 snap-center rounded-3xl overflow-hidden aspect-square shadow-lg relative bg-gray-100">
+                            <img src="https://placehold.co/800x800/eeeeee/9ca3af?text=Скриншот+отзыва+4" alt="Отзыв 4" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Слайд 5 -->
+                        <div class="w-[75vw] sm:w-[45vw] lg:w-[31%] max-w-[450px] max-h-[60vh] flex-shrink-0 snap-center rounded-3xl overflow-hidden aspect-square shadow-lg relative bg-gray-100">
+                            <img src="https://placehold.co/800x800/eeeeee/9ca3af?text=Скриншот+отзыва+5" alt="Отзыв 5" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Слайд 6 -->
+                        <div class="w-[75vw] sm:w-[45vw] lg:w-[31%] max-w-[450px] max-h-[60vh] flex-shrink-0 snap-center rounded-3xl overflow-hidden aspect-square shadow-lg relative bg-gray-100">
+                            <img src="https://placehold.co/800x800/eeeeee/9ca3af?text=Скриншот+отзыва+6" alt="Отзыв 6" class="w-full h-full object-cover">
+                        </div>
+
                     </div>
                 </div>
 
-                <!-- Кнопки навигации (вынесены по бокам) -->
-                <button id="prev-review" class="absolute -left-4 md:-left-16 top-1/2 -translate-y-1/2 bg-white text-gray-800 hover:text-orange-500 p-3 rounded-full shadow-lg transition transform hover:scale-110">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                <!-- Кнопки навигации -->
+                <button id="reviews-prev-slide" class="absolute left-2 md:-left-6 lg:-left-10 top-1/2 -translate-y-1/2 bg-white text-gray-900 w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full shadow-2xl border border-gray-100 transition-transform duration-300 hover:scale-110 z-20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                     </svg>
                 </button>
-                <button id="next-review" class="absolute -right-4 md:-right-16 top-1/2 -translate-y-1/2 bg-white text-gray-800 hover:text-orange-500 p-3 rounded-full shadow-lg transition transform hover:scale-110">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                <button id="reviews-next-slide" class="absolute right-2 md:-right-6 lg:-right-10 top-1/2 -translate-y-1/2 bg-white text-gray-900 w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full shadow-2xl border border-gray-100 transition-transform duration-300 hover:scale-110 z-20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
             </div>
 
             <!-- Кнопка -->
             <div class="text-center">
-                <button onclick="document.querySelector('input[name=name]').focus()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 px-12 rounded-full shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1 w-full md:w-auto">
-                    Забронировать полёт
+                <button onclick="openBookModal()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 px-12 rounded-[10px] shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1 w-full md:w-auto">
+                        Забронировать полёт
                 </button>
             </div>
 
         </div>
     </section>
 
-    <!-- БЛОК "FAQ" (НОВЫЙ) -->
+    <!-- БЛОК "FAQ" -->
     <section id="faq" class="py-20 bg-white">
         <div class="container mx-auto px-4 md:px-8">
             
             <!-- Заголовки -->
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-gray-900 mb-4">
-                    Ответы на частые вопросы
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900">
+                    Есть вопросы и сомнения?
                 </h2>
-                <p class="text-xl text-orange-500 font-bold uppercase tracking-wide">
-                    Возможно, здесь вы найдёте ответ на свой вопрос
-                </p>
             </div>
 
             <!-- Список вопросов (Аккордеон) -->
@@ -824,15 +774,15 @@
 
                 <form onsubmit="event.preventDefault(); alert('Вопрос отправлен!');" class="flex flex-col lg:flex-row items-center gap-4">
                     <div class="w-full lg:w-1/3">
-                        <input type="text" name="name" placeholder="Введите ваше имя" class="w-full px-6 py-4 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition text-gray-900 placeholder-gray-400 font-medium h-[60px]" required>
+                        <input type="text" name="name" placeholder="Введите ваше имя" class="w-full px-6 py-4 bg-white border border-gray-200 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition text-gray-900 placeholder-gray-400 font-medium h-[60px]" required>
                     </div>
                     
                     <div class="w-full lg:w-1/3">
-                        <input type="tel" name="phone" placeholder="Введите ваш телефон" class="w-full px-6 py-4 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition text-gray-900 placeholder-gray-400 font-medium h-[60px]" required>
+                        <input type="tel" name="phone" placeholder="Введите ваш телефон" class="w-full px-6 py-4 bg-white border border-gray-200 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition text-gray-900 placeholder-gray-400 font-medium h-[60px]" required>
                     </div>
 
-                    <div class="w-full lg:w-1/3">
-                        <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg h-[60px] rounded-xl shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1">
+                    <div class="w-full lg:w-1/3 w-full">
+                        <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg h-[60px] rounded-[10px] shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1">
                             Задать вопрос
                         </button>
                     </div>
@@ -890,7 +840,7 @@
 
                 <!-- Кнопка -->
                 <div class="lg:col-span-1 flex items-center justify-start lg:justify-end">
-                    <button onclick="document.querySelector('input[name=name]').focus()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 px-8 rounded-full shadow-lg shadow-orange-500/20 transition transform hover:-translate-y-1 w-full md:w-auto">
+                    <button onclick="openBookModal()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 px-8 rounded-[10px] shadow-lg shadow-orange-500/20 transition transform hover:-translate-y-1 w-full md:w-auto">
                         Забронировать полёт
                     </button>
                 </div>
@@ -904,6 +854,110 @@
 
         </div>
     </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО ДЛЯ УВЕЛИЧЕНИЯ ФОТО И ОТЗЫВОВ -->
+    <div id="image-modal" class="fixed inset-0 z-[100] hidden bg-black/90 items-center justify-center p-4 md:p-10 overflow-hidden">
+        <button id="close-modal" class="absolute top-4 right-4 md:top-8 md:right-8 text-white text-5xl leading-none hover:text-orange-500 transition focus:outline-none z-30">&times;</button>
+        
+        <!-- Кнопки переключения (Влево/Вправо) -->
+        <button id="modal-prev" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white bg-black/50 p-3 md:p-4 rounded-full hover:bg-orange-500 transition focus:outline-none z-30">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-10 md:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        <button id="modal-next" class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white bg-black/50 p-3 md:p-4 rounded-full hover:bg-orange-500 transition focus:outline-none z-30">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-10 md:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+
+        <!-- Контейнер для фото (Grid для наложения при анимации) -->
+        <div id="modal-track" class="grid w-full h-full items-center justify-center relative z-10">
+            <img id="modal-image" src="" alt="Увеличенное фото" class="col-start-1 row-start-1 max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl select-none relative z-10">
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО "ЗАКАЗАТЬ ЗВОНОК" (НОВОЕ) -->
+    <div id="call-modal" class="fixed inset-0 z-[110] hidden bg-black/60 items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 w-full max-w-md relative overflow-hidden">
+            <!-- Декор -->
+            <div class="absolute top-0 right-0 w-32 h-32 bg-sky-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+            <div class="absolute bottom-0 left-0 w-32 h-32 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+
+            <!-- Кнопка закрытия -->
+            <button id="close-call-modal" class="absolute top-5 right-5 text-gray-400 hover:text-orange-500 transition focus:outline-none z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- Контент -->
+            <div class="relative z-10 text-center mb-8 pt-2">
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Закажите звонок</h3>
+                <p class="text-gray-600 text-sm md:text-base leading-relaxed">Введите своё имя и телефон. Перезвоним в течение 15 минут</p>
+            </div>
+
+            <!-- Форма -->
+            <form onsubmit="event.preventDefault(); alert('Заявка на звонок отправлена!'); closeCallModal();" class="relative z-10 flex flex-col gap-4">
+                <div>
+                    <input type="text" name="modal-name" placeholder="Введите ваше имя" class="w-full px-6 py-4 bg-gray-50 border border-gray-200 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition text-gray-900 placeholder-gray-400 font-medium" required>
+                </div>
+                <div>
+                    <input type="tel" name="modal-phone" placeholder="Введите ваш телефон" class="w-full px-6 py-4 bg-gray-50 border border-gray-200 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition text-gray-900 placeholder-gray-400 font-medium" required>
+                </div>
+
+                <div class="mt-2">
+                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 rounded-[10px] shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1">
+                        Заказать звонок
+                    </button>
+                    <p class="text-xs text-gray-400 mt-4 text-center">
+                        Заявка бесплатная и ни к чему вас не обязывает
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО "ЗАБРОНИРОВАТЬ ПОЛЁТ" (НОВОЕ) -->
+    <div id="book-modal" class="fixed inset-0 z-[110] hidden bg-black/60 items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 w-full max-w-md relative overflow-hidden">
+            <!-- Декор -->
+            <div class="absolute top-0 right-0 w-32 h-32 bg-sky-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+            <div class="absolute bottom-0 left-0 w-32 h-32 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+
+            <!-- Кнопка закрытия -->
+            <button id="close-book-modal" class="absolute top-5 right-5 text-gray-400 hover:text-orange-500 transition focus:outline-none z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- Контент -->
+            <div class="relative z-10 text-center mb-8 pt-2">
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Забронируйте полёт</h3>
+                <p class="text-gray-600 text-sm md:text-base leading-relaxed">Введите своё имя и телефон. Перезвоним в течение 15 минут</p>
+            </div>
+
+            <!-- Форма -->
+            <form onsubmit="event.preventDefault(); alert('Заявка на бронирование отправлена!'); closeBookModal();" class="relative z-10 flex flex-col gap-4">
+                <div>
+                    <input type="text" name="book-name" placeholder="Введите ваше имя" class="w-full px-6 py-4 bg-gray-50 border border-gray-200 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition text-gray-900 placeholder-gray-400 font-medium" required>
+                </div>
+                <div>
+                    <input type="tel" name="book-phone" placeholder="Введите ваш телефон" class="w-full px-6 py-4 bg-gray-50 border border-gray-200 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition text-gray-900 placeholder-gray-400 font-medium" required>
+                </div>
+
+                <div class="mt-2">
+                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 rounded-[10px] shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1">
+                        Забронировать полёт
+                    </button>
+                    <p class="text-xs text-gray-400 mt-4 text-center">
+                        Заявка бесплатная и ни к чему вас не обязывает
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script>
         // Функция для аккордеона FAQ
@@ -929,97 +983,329 @@
         // Скрипт для мобильного меню
         const burgerBtn = document.getElementById('burger-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        const burgerIcon = document.getElementById('burger-icon');
+        const closeIcon = document.getElementById('close-icon');
 
         burgerBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
+            burgerIcon.classList.toggle('hidden');
+            burgerIcon.classList.toggle('block');
+            closeIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('block');
         });
         
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
+        // Плавный скролл и скрытие якоря в URL
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                
+                if (targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerOffset = 70; // Высота фиксированной шапки
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "smooth"
+                        });
+                    }
+                }
+                
+                // Скрываем мобильное меню и возвращаем иконку бургера при клике на любую ссылку
                 mobileMenu.classList.add('hidden');
+                burgerIcon.classList.remove('hidden');
+                burgerIcon.classList.add('block');
+                closeIcon.classList.add('hidden');
+                closeIcon.classList.remove('block');
             });
         });
 
-        // --- СЛАЙДЕР ФОТО И ВИДЕО ---
+        // --- ЛОГИКА ДЛЯ НОВОГО МОДАЛЬНОГО ОКНА "ЗАКАЗАТЬ ЗВОНОК" ---
+        const callModal = document.getElementById('call-modal');
+        const closeCallModalBtn = document.getElementById('close-call-modal');
+
+        function openCallModal() {
+            callModal.classList.remove('hidden');
+            callModal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Блокируем прокрутку
+            
+            // Если мы открываем с мобильного меню, прячем само меню
+            if (!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                burgerIcon.classList.remove('hidden');
+                burgerIcon.classList.add('block');
+                closeIcon.classList.add('hidden');
+                closeIcon.classList.remove('block');
+            }
+        }
+
+        function closeCallModal() {
+            callModal.classList.add('hidden');
+            callModal.classList.remove('flex');
+            document.body.style.overflow = ''; // Возвращаем прокрутку
+        }
+
+        closeCallModalBtn.addEventListener('click', closeCallModal);
+
+        callModal.addEventListener('click', (e) => {
+            // Закрываем, если клик был по темному фону, а не по самой форме
+            if (e.target === callModal) {
+                closeCallModal();
+            }
+        });
+
+        // --- ЛОГИКА ДЛЯ МОДАЛЬНОГО ОКНА "ЗАБРОНИРОВАТЬ ПОЛЁТ" ---
+        const bookModal = document.getElementById('book-modal');
+        const closeBookModalBtn = document.getElementById('close-book-modal');
+
+        function openBookModal() {
+            bookModal.classList.remove('hidden');
+            bookModal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Блокируем прокрутку
+        }
+
+        function closeBookModal() {
+            bookModal.classList.add('hidden');
+            bookModal.classList.remove('flex');
+            document.body.style.overflow = ''; // Возвращаем прокрутку
+        }
+
+        closeBookModalBtn.addEventListener('click', closeBookModal);
+
+        bookModal.addEventListener('click', (e) => {
+            // Закрываем, если клик был по темному фону, а не по самой форме
+            if (e.target === bookModal) {
+                closeBookModal();
+            }
+        });
+
+        // --- СЛАЙДЕР ФОТО И ВИДЕО (ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ) ---
         const track = document.getElementById('slider-track');
         const prevBtn = document.getElementById('prev-slide');
         const nextBtn = document.getElementById('next-slide');
-        const dots = document.querySelectorAll('.slider-dot');
-        
-        let currentSlide = 0;
-        const totalSlides = dots.length;
 
-        function updateSlider() {
+        function scrollMediaSlider(direction) {
             if(!track) return;
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-            dots.forEach((dot, index) => {
-                if (index === currentSlide) {
-                    dot.classList.remove('bg-white/50');
-                    dot.classList.add('bg-white', 'opacity-100', 'ring-2', 'ring-black/20');
+            const slide = track.querySelector('div');
+            if(!slide) return;
+            
+            const slideWidth = slide.clientWidth;
+            const gap = window.innerWidth >= 768 ? 24 : 16;
+            const scrollAmount = slideWidth + gap;
+            
+            if (direction === 'next') {
+                if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
+                    track.scrollTo({ left: 0, behavior: 'smooth' }); // Возврат в начало
                 } else {
-                    dot.classList.add('bg-white/50');
-                    dot.classList.remove('bg-white', 'opacity-100', 'ring-2', 'ring-black/20');
+                    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
                 }
-            });
+            } else {
+                if (track.scrollLeft <= 0) {
+                    track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' }); // Переход в конец
+                } else {
+                    track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                }
+            }
         }
 
         if(nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                currentSlide = (currentSlide + 1) % totalSlides;
-                updateSlider();
-            });
+            nextBtn.addEventListener('click', () => scrollMediaSlider('next'));
         }
 
         if(prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-                updateSlider();
-            });
+            prevBtn.addEventListener('click', () => scrollMediaSlider('prev'));
         }
 
-        if(dots) {
-            dots.forEach(dot => {
-                dot.addEventListener('click', (e) => {
-                    currentSlide = parseInt(e.target.dataset.index);
-                    updateSlider();
-                });
-            });
-        }
+        // --- СЛАЙДЕР ОТЗЫВОВ (ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ) ---
+        const reviewsTrackEl = document.getElementById('reviews-slider-track');
+        const reviewsPrevBtnEl = document.getElementById('reviews-prev-slide');
+        const reviewsNextBtnEl = document.getElementById('reviews-next-slide');
 
-        // --- СЛАЙДЕР ОТЗЫВОВ ---
-        const reviewsTrack = document.getElementById('reviews-track');
-        const prevReviewBtn = document.getElementById('prev-review');
-        const nextReviewBtn = document.getElementById('next-review');
-        
-        let currentReview = 0;
-        const totalReviews = 3; 
-
-        function updateReviewsSlider() {
-            if(!reviewsTrack) return;
-            reviewsTrack.style.transform = `translateX(-${currentReview * 100}%)`;
-        }
-
-        if(nextReviewBtn) {
-            nextReviewBtn.addEventListener('click', () => {
-                currentReview = (currentReview + 1) % totalReviews;
-                updateReviewsSlider();
-            });
-        }
-
-        if(prevReviewBtn) {
-            prevReviewBtn.addEventListener('click', () => {
-                currentReview = (currentReview - 1 + totalReviews) % totalReviews;
-                updateReviewsSlider();
-            });
-        }
-
-        // Автоматическое переключение
-        setInterval(() => {
-            if(totalSlides > 0) {
-                currentSlide = (currentSlide + 1) % totalSlides;
-                updateSlider();
+        function scrollReviewsSlider(direction) {
+            if(!reviewsTrackEl) return;
+            const slide = reviewsTrackEl.querySelector('div');
+            if(!slide) return;
+            
+            const slideWidth = slide.clientWidth;
+            const gap = window.innerWidth >= 768 ? 24 : 16;
+            const scrollAmount = slideWidth + gap;
+            
+            if (direction === 'next') {
+                if (reviewsTrackEl.scrollLeft + reviewsTrackEl.clientWidth >= reviewsTrackEl.scrollWidth - 10) {
+                    reviewsTrackEl.scrollTo({ left: 0, behavior: 'smooth' }); // Возврат в начало
+                } else {
+                    reviewsTrackEl.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+            } else {
+                if (reviewsTrackEl.scrollLeft <= 0) {
+                    reviewsTrackEl.scrollTo({ left: reviewsTrackEl.scrollWidth, behavior: 'smooth' }); // Переход в конец
+                } else {
+                    reviewsTrackEl.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                }
             }
+        }
+
+        if(reviewsNextBtnEl) {
+            reviewsNextBtnEl.addEventListener('click', () => scrollReviewsSlider('next'));
+        }
+
+        if(reviewsPrevBtnEl) {
+            reviewsPrevBtnEl.addEventListener('click', () => scrollReviewsSlider('prev'));
+        }
+
+        // Автоматическое переключение обоих слайдеров
+        setInterval(() => {
+            scrollMediaSlider('next');
+            scrollReviewsSlider('next');
         }, 5000); 
+
+        // --- МОДАЛЬНОЕ ОКНО ДЛЯ ФОТО И ОТЗЫВОВ (ЛАЙТБОКС) ---
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalTrack = document.getElementById('modal-track');
+        const closeModalBtn = document.getElementById('close-modal');
+        const modalPrevBtn = document.getElementById('modal-prev');
+        const modalNextBtn = document.getElementById('modal-next');
+        // Собираем картинки из обоих слайдеров в один массив
+        const sliderImages = Array.from(document.querySelectorAll('#slider-track img, #reviews-slider-track img'));
+        
+        let currentModalIndex = 0;
+        let isAnimating = false;
+
+        // Функция показа картинки по индексу с анимацией
+        function showModalImage(index, direction = 'next') {
+            if (isAnimating) return;
+
+            if (index < 0) index = sliderImages.length - 1;
+            if (index >= sliderImages.length) index = 0;
+            currentModalIndex = index;
+
+            // Если открываем впервые (без анимации листания)
+            if (direction === 'none') {
+                modalImage.src = sliderImages[currentModalIndex].src;
+                modalImage.style.transform = 'translateX(0)';
+                return;
+            }
+
+            isAnimating = true;
+
+            // Создаем клон текущей картинки для отлета
+            const clone = modalImage.cloneNode(true);
+            modalTrack.appendChild(clone);
+
+            // Подготавливаем новую картинку (спрятанную за экраном)
+            modalImage.style.transition = 'none';
+            modalImage.style.transform = direction === 'next' ? 'translateX(100vw)' : 'translateX(-100vw)';
+            modalImage.src = sliderImages[currentModalIndex].src;
+
+            // Вызываем принудительную перерисовку DOM
+            void modalImage.offsetWidth;
+
+            // Включаем анимацию
+            const duration = 300; // скорость листания
+            modalImage.style.transition = `transform ${duration}ms ease-out`;
+            modalImage.style.transform = 'translateX(0)';
+
+            clone.style.transition = `transform ${duration}ms ease-out`;
+            clone.style.transform = direction === 'next' ? 'translateX(-100vw)' : 'translateX(100vw)';
+
+            // Удаляем старый клон после того, как он улетел
+            setTimeout(() => {
+                clone.remove();
+                isAnimating = false;
+            }, duration);
+        }
+
+        // Добавляем указатель и обработчик клика для каждой картинки
+        sliderImages.forEach((img, index) => {
+            img.classList.add('cursor-zoom-in', 'transition-opacity', 'hover:opacity-90');
+            img.addEventListener('click', () => {
+                showModalImage(index, 'none');
+                imageModal.classList.remove('hidden');
+                imageModal.classList.add('flex');
+                document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
+            });
+        });
+
+        // Навигация модального окна кликами по стрелкам
+        modalPrevBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Чтобы клик не дошел до фона и не закрыл окно
+            showModalImage(currentModalIndex - 1, 'prev');
+        });
+        
+        modalNextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showModalImage(currentModalIndex + 1, 'next');
+        });
+
+        // Функция закрытия модального окна
+        function closeImageModal() {
+            imageModal.classList.add('hidden');
+            imageModal.classList.remove('flex');
+            document.body.style.overflow = ''; // Возвращаем прокрутку
+            modalImage.src = ''; // Очищаем src
+            isAnimating = false;
+        }
+
+        // Закрытие по кнопке (крестику)
+        closeModalBtn.addEventListener('click', closeImageModal);
+        
+        // Закрытие по клику на темный фон
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal || e.target === modalTrack) {
+                closeImageModal();
+            }
+        });
+
+        // Свайпы (Touch события для мобильных)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        imageModal.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        imageModal.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            const swipeThreshold = 50; // Минимальная дистанция для свайпа
+            if (touchEndX < touchStartX - swipeThreshold) {
+                showModalImage(currentModalIndex + 1, 'next'); // Свайп влево
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                showModalImage(currentModalIndex - 1, 'prev'); // Свайп вправо
+            }
+        }
+
+        // Клавиатура (Esc, Left, Right)
+        document.addEventListener('keydown', (e) => {
+            // Закрытие формы звонка по Esc
+            if (!callModal.classList.contains('hidden') && e.key === 'Escape') {
+                closeCallModal();
+            }
+            
+            // Закрытие формы бронирования по Esc
+            if (!bookModal.classList.contains('hidden') && e.key === 'Escape') {
+                closeBookModal();
+            }
+            
+            // Управление модальным окном фото
+            if (!imageModal.classList.contains('hidden')) {
+                if (e.key === 'Escape') {
+                    closeImageModal();
+                } else if (e.key === 'ArrowLeft') {
+                    showModalImage(currentModalIndex - 1, 'prev');
+                } else if (e.key === 'ArrowRight') {
+                    showModalImage(currentModalIndex + 1, 'next');
+                }
+            }
+        });
     </script>
 </body>
 </html>
