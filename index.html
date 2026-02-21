@@ -143,7 +143,7 @@
                         <button onclick="openBookModal()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 px-10 rounded-[10px] shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1 text-center">
                             Записаться на полёт
                         </button>
-                        <button onclick="document.querySelector('input[name=name]').focus()" class="bg-white hover:bg-gray-50 text-gray-900 font-bold text-lg py-4 px-10 rounded-[10px] shadow-lg transition transform hover:-translate-y-1 text-center">
+                        <button onclick="openCertModal()" class="bg-white hover:bg-gray-50 text-gray-900 font-bold text-lg py-4 px-10 rounded-[10px] shadow-lg transition transform hover:-translate-y-1 text-center">
                             Купить подарочный сертификат
                         </button>
                     </div>
@@ -959,6 +959,47 @@
         </div>
     </div>
 
+    <!-- МОДАЛЬНОЕ ОКНО "КУПИТЬ ПОДАРОЧНЫЙ СЕРТИФИКАТ" (НОВОЕ) -->
+    <div id="cert-modal" class="fixed inset-0 z-[110] hidden bg-black/60 items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 w-full max-w-md relative overflow-hidden">
+            <!-- Декор -->
+            <div class="absolute top-0 right-0 w-32 h-32 bg-sky-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+            <div class="absolute bottom-0 left-0 w-32 h-32 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+
+            <!-- Кнопка закрытия -->
+            <button id="close-cert-modal" class="absolute top-5 right-5 text-gray-400 hover:text-orange-500 transition focus:outline-none z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- Контент -->
+            <div class="relative z-10 text-center mb-8 pt-2">
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Купите подарочный сертификат</h3>
+                <p class="text-gray-600 text-sm md:text-base leading-relaxed">Введите своё имя и телефон. Перезвоним в течение 15 минут</p>
+            </div>
+
+            <!-- Форма -->
+            <form onsubmit="event.preventDefault(); alert('Заявка на сертификат отправлена!'); closeCertModal();" class="relative z-10 flex flex-col gap-4">
+                <div>
+                    <input type="text" name="cert-name" placeholder="Введите ваше имя" class="w-full px-6 py-4 bg-gray-50 border border-gray-200 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition text-gray-900 placeholder-gray-400 font-medium" required>
+                </div>
+                <div>
+                    <input type="tel" name="cert-phone" placeholder="Введите ваш телефон" class="w-full px-6 py-4 bg-gray-50 border border-gray-200 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition text-gray-900 placeholder-gray-400 font-medium" required>
+                </div>
+
+                <div class="mt-2">
+                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 rounded-[10px] shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-1">
+                        Купить сертификат
+                    </button>
+                    <p class="text-xs text-gray-400 mt-4 text-center">
+                        Заявка бесплатная и ни к чему вас не обязывает
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         // Функция для аккордеона FAQ
         function toggleFaq(button) {
@@ -1079,6 +1120,31 @@
             // Закрываем, если клик был по темному фону, а не по самой форме
             if (e.target === bookModal) {
                 closeBookModal();
+            }
+        });
+
+        // --- ЛОГИКА ДЛЯ МОДАЛЬНОГО ОКНА "КУПИТЬ ПОДАРОЧНЫЙ СЕРТИФИКАТ" ---
+        const certModal = document.getElementById('cert-modal');
+        const closeCertModalBtn = document.getElementById('close-cert-modal');
+
+        function openCertModal() {
+            certModal.classList.remove('hidden');
+            certModal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Блокируем прокрутку
+        }
+
+        function closeCertModal() {
+            certModal.classList.add('hidden');
+            certModal.classList.remove('flex');
+            document.body.style.overflow = ''; // Возвращаем прокрутку
+        }
+
+        closeCertModalBtn.addEventListener('click', closeCertModal);
+
+        certModal.addEventListener('click', (e) => {
+            // Закрываем, если клик был по темному фону, а не по самой форме
+            if (e.target === certModal) {
+                closeCertModal();
             }
         });
 
@@ -1293,6 +1359,11 @@
             // Закрытие формы бронирования по Esc
             if (!bookModal.classList.contains('hidden') && e.key === 'Escape') {
                 closeBookModal();
+            }
+
+            // Закрытие формы сертификата по Esc
+            if (!certModal.classList.contains('hidden') && e.key === 'Escape') {
+                closeCertModal();
             }
             
             // Управление модальным окном фото
